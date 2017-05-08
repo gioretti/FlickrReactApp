@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 
-import SearchComponent from './SearchComponent';
-import PhotoList from './PhotoList';
-import PhotoDetails from './PhotoDetails';
+import Searcher from './view/Searcher';
+import PhotoList from './view/PhotoList';
+import PhotoDetails from './view/PhotoDetails';
 
+var API_KEY = "<YOUR-API-KEY>";
 
 class App extends Component {
+
 
     constructor() {
         super();
@@ -27,7 +28,7 @@ class App extends Component {
           <h2>Flickr React App</h2>
         </div>
 
-        <SearchComponent
+        <Searcher
             onKeywordsChange={(keywords) => this.onKeywordsChange(keywords)}
             onClick={() => this.searchPhotos()}
         />
@@ -57,7 +58,7 @@ class App extends Component {
   searchPhotos() {
       var format = "json";
       var method = "flickr.photos.search";
-      var api_key = "6a649c82f952ff6605e2e590068c1a90";
+      var api_key = API_KEY;
       var keywords = this.state.keywords;
       var url = 'https://api.flickr.com/services/rest/?' +
                             'method='+ method +
@@ -83,7 +84,7 @@ class App extends Component {
   getPhotoDetails(photoId){
       var format = "json";
       var method = "flickr.photos.getInfo";
-      var api_key = "6a649c82f952ff6605e2e590068c1a90";
+      var api_key = API_KEY;
       var url = 'https://api.flickr.com/services/rest/?' +
                             'method='+ method +
                             '&api_key=' + api_key +
@@ -106,6 +107,23 @@ class App extends Component {
 
   hasPhotoDetails() {
       return  Object.keys(this.state.photoDetails).length > 0;
+  }
+
+  getApiKey() {
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", "file://flickr_api_key", false);
+      rawFile.onreadystatechange = function ()
+      {
+          if(rawFile.readyState === 4)
+          {
+              if(rawFile.status === 200 || rawFile.status === 0)
+              {
+                  var allText = rawFile.responseText;
+                  alert(allText);
+              }
+          }
+      }
+      rawFile.send(null);
   }
 }
 

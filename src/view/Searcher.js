@@ -1,6 +1,8 @@
 import React from 'react';
 
-function SearchComponent(props) {
+function Searcher
+
+(props) {
 
         return(
             <div className="form-inline searchComponent">
@@ -22,4 +24,4 @@ function SearchComponent(props) {
         );
 }
 
-export default SearchComponent;
+export default Searcher;
